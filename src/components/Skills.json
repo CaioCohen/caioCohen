@@ -1,0 +1,70 @@
+[
+    {
+        "Title": "JavaScript",
+        "Image": "javascript.png"
+    },
+    {
+        "Title": "TypeScript",
+        "Image": "typescript.png"
+    },
+    {
+        "Title": "Angular",
+        "Image": "angular.png"
+    },
+    {
+        "Title": "React",
+        "Image": "react.svg"
+    },
+    {
+        "Title": "Node.js",
+        "Image": "node.png"
+    },
+    {
+        "Title": "Firebase",
+        "Image": "firebase.png"
+    },
+    {
+        "Title": "Azure",
+        "Image": "azureDevops.svg"
+    },
+    {
+        "Title": "HTML5",
+        "Image": "HTML-5.png"
+    },
+    {
+        "Title": "CSS",
+        "Image": "css.png"
+    },
+    {
+        "Title": "Sass",
+        "Image": "sass.png"
+    },
+    {
+        "Title": "SQL",
+        "Image": "sql.png"
+    },
+    {
+        "Title": "React Native",
+        "Image": "reactNative.png"
+    },
+    {
+        "Title": "Python",
+        "Image": "python.png"
+    },
+    {
+        "Title": "ASP .NET Core",
+        "Image": "netCore.png"
+    },
+    {
+        "Title": "AWS",
+        "Image": "AWS.png"
+    },
+    {
+        "Title": "Github",
+        "Image": "github.png"
+    },
+    {
+        "Title": "Git",
+        "Image": "git.png"
+    }
+]

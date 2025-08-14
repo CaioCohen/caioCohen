@@ -4,28 +4,29 @@ import "./App.css";
 import Navbar from "./components/navbar";
 import Home from "./components/Home";
 import Portfolio from "./components/Portfolio";
+import Skills from "./components/Skills";
 
 export default function App() {
   return (
     <>
       <Navbar />
-      <Element name="home" className="section" style={{ background: "#222" }}>
+      <Element name="home" className="section">
         <Home />
       </Element>
 
-      <Element name="portfolio" className="section" style={{ background: "#333" }}>
+      <Element name="portfolio" className="section">
         <Portfolio />
       </Element>
 
-      <Element name="about" className="section" style={{ background: "#444" }}>
-        <h1>About Section</h1>
+      <Element name="skills" className="section">
+        <Skills />
       </Element>
 
-      <Element name="services" className="section" style={{ background: "#555" }}>
+      <Element name="services" className="section">
         <h1>Services Section</h1>
       </Element>
 
-      <Element name="contact" className="section" style={{ background: "#666" }}>
+      <Element name="contact" className="section">
         <h1>Contact Section</h1>
       </Element>
     </>

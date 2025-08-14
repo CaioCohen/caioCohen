@@ -1,0 +1,105 @@
+.skills-section {
+  /* ocupa a viewport inteira, descontando a navbar (~70px) */
+  min-height: calc(100vh - 70px);
+  width: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+
+  /* centraliza verticalmente o bloco */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+
+  /* “container” fluido nas laterais */
+  padding-inline: clamp(16px, 5vw, 64px);
+  padding-block: clamp(24px, 6vh, 64px);
+}
+
+.skills-title {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1rem, 2.4vw, 1.2rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* grade full-width, com limite confortável */
+.skills-grid {
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+  gap: clamp(14px, 2vw, 22px);
+  width: 100%;
+  max-width: 1100px;
+}
+
+.skill-pin {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  outline: 1px solid rgba(var(--color-text-rgb, 255,255,255), 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    0 10px 30px rgba(0,0,0,0.35);
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s ease, outline-color 0.2s ease, box-shadow 0.2s ease;
+
+  img {
+    width: 56%;
+    height: 56%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+    transition: transform 0.25s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    outline-color: rgba(var(--color-text-rgb, 255,255,255), 0.18);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 16px 40px rgba(0,0,0,0.45);
+    img { transform: scale(1.06); }
+  }
+
+  /* tooltip */
+  &::after {
+    content: attr(data-title);
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    transform: translate(-50%, 100%);
+    white-space: nowrap;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    line-height: 1;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    transform: translate(-50%, 100%);
+    border: 6px solid transparent;
+    border-bottom-color: rgba(0,0,0,0.8);
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  &:hover::after,
+  &:hover::before {
+    opacity: 1;
+    transform: translate(-50%, calc(100% + 2px));
+  }
+}
