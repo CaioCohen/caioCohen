@@ -5,6 +5,7 @@ import Navbar from "./components/navbar";
 import Home from "./components/Home";
 import Portfolio from "./components/Portfolio";
 import Skills from "./components/Skills";
+import Contact from "./components/Contact";
 
 export default function App() {
   return (
@@ -22,12 +23,8 @@ export default function App() {
         <Skills />
       </Element>
 
-      <Element name="services" className="section">
-        <h1>Services Section</h1>
-      </Element>
-
       <Element name="contact" className="section">
-        <h1>Contact Section</h1>
+        <Contact />
       </Element>
     </>
   );

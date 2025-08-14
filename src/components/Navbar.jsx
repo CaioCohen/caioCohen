@@ -26,7 +26,6 @@ export default function Navbar() {
                     <li><Link to="home" smooth duration={500}>Home</Link></li>
                     <li><Link to="portfolio" smooth duration={500}>Portfolio</Link></li>
                     <li><Link to="skills" smooth duration={500}>Skills</Link></li>
-                    <li><Link to="services" smooth duration={500}>Services</Link></li>
                     <li><Link to="contact" smooth duration={500}>Contact</Link></li>
                 </ul>
             </div>
