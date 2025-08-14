@@ -1,15 +1,15 @@
 /* Variáveis padrão (tema escuro) */
 :root {
-  --color-bg: #111;
+  --color-bg: rgb(0, 0, 0);
   --color-text: #fff;
-  --color-primary: #fff; // verde
+  --color-primary: #fff;
 }
 
 /* Tema claro */
 .light-theme {
-  --color-bg: #fff;
+  --color-bg: rgb(255, 255, 255);
   --color-text: #000;
-  --color-primary: #000; // azul
+  --color-primary: #000;
 }
 
 /* Reset básico */

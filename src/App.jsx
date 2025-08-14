@@ -3,6 +3,7 @@ import { Element } from "react-scroll";
 import "./App.css";
 import Navbar from "./components/navbar";
 import Home from "./components/Home";
+import Portfolio from "./components/Portfolio";
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
       </Element>
 
       <Element name="portfolio" className="section" style={{ background: "#333" }}>
-        <h1>Portfolio Section</h1>
+        <Portfolio />
       </Element>
 
       <Element name="about" className="section" style={{ background: "#444" }}>
