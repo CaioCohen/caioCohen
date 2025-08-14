@@ -66,5 +66,13 @@
     {
         "Title": "Git",
         "Image": "git.png"
+    },
+    {
+        "Title": "Communication",
+        "Image": "communication.png"
+    },
+    {
+        "Title": "Problem Solving",
+        "Image": "problemSolving.png"
     }
 ]

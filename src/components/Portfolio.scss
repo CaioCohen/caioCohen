@@ -1,15 +1,12 @@
 .portfolio-section {
-    min-height: calc(100vh - 70px);
-    background: var(--color-bg);
-    opacity: 80%;
+    min-height: 100vh;
+    background: rgba(var(--color-bg-rgb), 0.8);
     color: var(--color-text);
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 20px;
     width: 100%;
-    padding-inline: clamp(16px, 5vw, 64px);
-    padding-block: clamp(24px, 6vh, 64px);
 }
 
 .portfolio-title {

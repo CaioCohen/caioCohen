@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  width: 100%;
   background: var(--color-bg);
   color: var(--color-text);
   padding: 0 5%;
@@ -22,11 +23,9 @@
 
   .home-text {
     flex: 1;
-    background: linear-gradient(
-      to right,
-      var(--color-bg) 0%,
-      transparent 100%
-    );
+    background: linear-gradient(to right,
+        var(--color-bg) 0%,
+        transparent 100%);
     padding: 20px;
     border-radius: 10px;
 
@@ -35,6 +34,7 @@
       margin-bottom: 20px;
       color: var(--color-primary);
     }
+
     h2 {
       font-size: 2rem;
       margin-bottom: 20px;

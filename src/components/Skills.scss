@@ -1,8 +1,8 @@
 .skills-section {
   /* ocupa a viewport inteira, descontando a navbar (~70px) */
-  min-height: calc(100vh - 70px);
+  min-height: 100vh;
   width: 100%;
-  background: var(--color-bg);
+  background: rgba(var(--color-bg-rgb), 0.6);
   color: var(--color-text);
 
   /* centraliza verticalmente o bloco */
@@ -13,7 +13,6 @@
 
   /* “container” fluido nas laterais */
   padding-inline: clamp(16px, 5vw, 64px);
-  padding-block: clamp(24px, 6vh, 64px);
 }
 
 .skills-title {
@@ -27,21 +26,31 @@
 
 /* grade full-width, com limite confortável */
 .skills-grid {
+  /* container */
   margin: 0 auto;
   padding: 0;
   list-style: none;
 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+  /* flex em vez de grid */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;   /* centraliza a última linha */
+  align-items: center;
   gap: clamp(14px, 2vw, 22px);
+
   width: 100%;
   max-width: 1100px;
+  overflow: visible;
 }
 
+/* cada pin com tamanho fixo/responsivo para o wrap calcular direitinho */
 .skill-pin {
-  position: relative;
-  aspect-ratio: 1 / 1;
+  width: clamp(86px, 8.5vw, 110px);
+  height: clamp(86px, 8.5vw, 110px);
   border-radius: 20px;
+
+  /* o resto do seu estilo permanece */
+  position: relative;
   background: rgba(255, 255, 255, 0.03);
   outline: 1px solid rgba(var(--color-text-rgb, 255,255,255), 0.08);
   box-shadow:
@@ -62,6 +71,7 @@
   &:hover {
     transform: translateY(-2px);
     outline-color: rgba(var(--color-text-rgb, 255,255,255), 0.18);
+    z-index: 20;
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.12),
       0 16px 40px rgba(0,0,0,0.45);

@@ -1,6 +1,7 @@
 /* Variáveis padrão (tema escuro) */
 :root {
   --color-bg: rgb(0, 0, 0);
+  --color-bg-rgb: 0,0,0;
   --color-text: #fff;
   --color-primary: #fff;
 }
@@ -8,6 +9,7 @@
 /* Tema claro */
 .light-theme {
   --color-bg: rgb(255, 255, 255);
+  --color-bg-rgb: 255,255,255;
   --color-text: #000;
   --color-primary: #000;
 }
@@ -17,7 +19,6 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: var(--color-bg);
   color: var(--color-text);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
