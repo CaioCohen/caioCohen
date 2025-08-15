@@ -69,4 +69,36 @@
       color: var(--color-bg);
     }
   }
+
+  .logo-container {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    .logo-img {
+      height: 40px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-text {
+      margin-left: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--color-primary);
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      white-space: nowrap;
+    }
+
+    &:hover .logo-text {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }

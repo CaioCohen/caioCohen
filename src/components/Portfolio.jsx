@@ -2,72 +2,113 @@ import React, { useEffect, useMemo, useRef, useState, useCallback } from "react"
 import "./Portfolio.scss";
 import data from "./Portfolio.json";
 
-// Mapeia imagens de /src/assets
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// imagens
 const images = import.meta.glob("/src/assets/*", { eager: true, as: "url" });
 const imageByName = Object.fromEntries(
-  Object.entries(images).map(([path, url]) => [path.split("/").pop(), url])
+  Object.entries(images).map(([p, url]) => [p.split("/").pop(), url])
 );
 
 export default function Portfolio() {
   const trackRef = useRef(null);
-  const [openItem, setOpenItem] = useState(null); // item selecionado para o modal
+  const recenteringRef = useRef(false); // evita loop de onScroll
+  const [openItem, setOpenItem] = useState(null);
 
-  // triplica os itens para looping
+  // triplica os itens
   const blocks = 3;
   const items = useMemo(() => Array.from({ length: blocks }, () => data).flat(), []);
 
-  const getCardFullWidth = () => {
+  const getMetrics = () => {
     const track = trackRef.current;
     const first = track?.firstElementChild;
-    if (!track || !first) return 320;
+    if (!track || !first) return { cardW: 320, gap: 20, blockW: 320 * data.length };
+
     const cardW = first.getBoundingClientRect().width;
     const styles = getComputedStyle(track);
-    const gap = parseFloat(styles.columnGap || styles.gap || "20") || 20;
-    return cardW + gap;
+    const gap = parseFloat(styles.columnGap || styles.gap || "0") || 0;
+
+    // comprimento correto do bloco: N*card + (N-1)*gap
+    const blockW = cardW * data.length + gap * Math.max(0, data.length - 1);
+    return { cardW, gap, blockW };
   };
 
-  const getBlockWidth = () => getCardFullWidth() * data.length;
+  const getCardFullWidth = () => {
+    const { cardW, gap } = getMetrics();
+    return cardW + gap; // usado para pular 1 card nas setas
+  };
 
+  const getBlockWidth = () => getMetrics().blockW;
+
+  // inicia no bloco do meio
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+
     const id = requestAnimationFrame(() => {
       const blockW = getBlockWidth();
-      track.scrollLeft = blockW; // meio
+      const prevBeh = track.style.scrollBehavior;
+      track.style.scrollBehavior = "auto";
+      track.scrollLeft = blockW; // início do bloco central
+      track.style.scrollBehavior = prevBeh || "smooth";
     });
+
     return () => cancelAnimationFrame(id);
   }, []);
 
   const keepInMiddle = () => {
     const track = trackRef.current;
-    if (!track) return;
+    if (!track || recenteringRef.current) return;
+
     const blockW = getBlockWidth();
     const left = track.scrollLeft;
-    const leftThreshold = blockW * 0.5;
+
+    // zona segura mais ampla: 0.25 e 1.75 blocos
+    const leftThreshold = blockW * 0.25;
     const rightThreshold = blockW * 1.5;
+
     if (left < leftThreshold || left > rightThreshold) {
-      const prev = track.style.scrollBehavior;
+      recenteringRef.current = true;
+
+      const prevBeh = track.style.scrollBehavior;
+      const prevSnap = track.style.scrollSnapType;
+
+      // desliga animação e snap para realinhar sem o browser interferir
       track.style.scrollBehavior = "auto";
-      if (left < leftThreshold) track.scrollLeft = left + blockW;
-      else if (left > rightThreshold) track.scrollLeft = left - blockW;
-      track.style.scrollBehavior = prev || "smooth";
+      track.style.scrollSnapType = "none";
+      track.scrollLeft = left < leftThreshold ? left + blockW : left - blockW;
+
+      // aplica no próximo frame e restaura estados
+      requestAnimationFrame(() => {
+        track.style.scrollBehavior = prevBeh || "smooth";
+        track.style.scrollSnapType = prevSnap || "x mandatory";
+        recenteringRef.current = false;
+      });
     }
   };
 
-  const scrollByItem = (direction) => {
+  const scrollByItem = async (direction) => {
     const track = trackRef.current;
     if (!track) return;
+
     const delta = getCardFullWidth() * direction;
+
+    // desliga snap, faz scroll suave, espera terminar e recentra
+    const prevSnap = track.style.scrollSnapType;
+    track.style.scrollSnapType = "none";
     track.scrollBy({ left: delta, behavior: "smooth" });
+
+    //await sleep(50); // dá tempo para a animação terminar
+    keepInMiddle();
+    track.style.scrollSnapType = prevSnap || "x mandatory";
   };
 
-  // Modal controls
+  // Modal
   const openModal = useCallback((item) => setOpenItem(item), []);
   const closeModal = useCallback(() => setOpenItem(null), []);
 
-  // Fecha com Esc e trava scroll de fundo
   useEffect(() => {
-    const onKey = (e) => { if (e.key === "Escape") closeModal(); };
+    const onKey = (e) => e.key === "Escape" && closeModal();
     if (openItem) {
       document.addEventListener("keydown", onKey);
       document.body.style.overflow = "hidden";
@@ -111,36 +152,25 @@ export default function Portfolio() {
         <button onClick={() => scrollByItem(1)} aria-label="Scroll right">▶</button>
       </div>
 
-      {/* Modal */}
       {openItem && (
         <div
           className="modal-backdrop"
           role="dialog"
           aria-modal="true"
           aria-label={`${openItem.Title} details`}
-          onClick={(e) => {
-            // fecha ao clicar fora do conteúdo
-            if (e.target === e.currentTarget) closeModal();
-          }}
+          onClick={(e) => e.target === e.currentTarget && closeModal()}
         >
           <div className="modal-content">
             <button className="modal-close" onClick={closeModal} aria-label="Close modal">✕</button>
 
             <div className="modal-header">
-              <img
-                src={imageByName[openItem.Image]}
-                alt={openItem.Title}
-                className="modal-cover"
-              />
+              <img src={imageByName[openItem.Image]} alt={openItem.Title} className="modal-cover" />
               <h3 className="modal-title">{openItem.Title}</h3>
             </div>
 
             {openItem.Description && (
               <div className="modal-body">
-                {/* preserva quebras de linha do JSON */}
-                {openItem.Description.split("\n").map((line, i) => (
-                  <p key={i}>{line}</p>
-                ))}
+                {openItem.Description.split("\n").map((line, i) => <p key={i}>{line}</p>)}
               </div>
             )}
           </div>

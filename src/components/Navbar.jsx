@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-scroll";
 import "./Navbar.scss";
 
+// importa as logos
+import logoWhite from "/src/assets/logoWhite.png";
+import logoBlack from "/src/assets/logoBlack.png";
+
 export default function Navbar() {
     const [theme, setTheme] = useState("dark");
 
@@ -19,7 +23,14 @@ export default function Navbar() {
 
     return (
         <nav className="navbar">
-            <div className="logo">Caio Cohen</div>
+            <div className="logo-container">
+                <img
+                    src={theme === "dark" ? logoWhite : logoBlack}
+                    alt="Logo"
+                    className="logo-img"
+                />
+                <span className="logo-text">Caio Cohen</span>
+            </div>
 
             <div className="nav-center">
                 <ul className="nav-links">
