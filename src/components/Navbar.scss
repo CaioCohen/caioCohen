@@ -101,4 +101,17 @@
       transform: translateX(0);
     }
   }
+
+  @media (max-width: 900px) {
+  .theme-toggle{
+    display: none;
+  }
+
+  .logo-container{
+    img{
+    display: none;
+    }
+  }
 }
+}
+
